@@ -1,9 +1,6 @@
 package org.example;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -100,6 +97,23 @@ public class Main2 {
             exacto: "Aprobados: [nombre1, nombre2, nombre3]!".
          */
 
+        System.out.println();
+        System.out.println("Ejercicio Intermedio 5");
+
+        List<Estudiante> estudiantes = List.of(
+                new Estudiante("Gustavo", 10D),
+                new Estudiante("Maria", 5D),
+                new Estudiante("Pedro", 8D)
+        );
+
+
+        String aprobados = estudiantes.stream()
+                .filter(e -> e.nota() >=6)
+                .map(Estudiante::nombre)
+                .collect(Collectors.joining(", ", "Aprobados: [","]!"));
+
+        System.out.println(aprobados);
+
 
 
         /*
@@ -111,6 +125,25 @@ public class Main2 {
             antiguo.
          */
 
+        System.out.println();
+        System.out.println("Ejercicio Intermedio 6");
+
+        List<Libro> libros = List.of(
+                new Libro("1984", "George Orwell", 1949),
+                new Libro("Carrie", "Stephen King", 1974),
+                new Libro("Coraline", "Neil Gaiman", 2002),
+                new Libro("It", "Stephen King", 1986),
+                new Libro("El libro del cementerio", "Neil Gaiman", 2008)
+        );
+
+
+        libros.stream()
+                .sorted(Comparator.comparing(Libro::autor)
+                        .thenComparing(Libro::anioPublicacion, Comparator.reverseOrder()))
+                .forEach(System.out::println);
+
+
+
         /*
             Nivel Avanzado
             7) Dada una lista de números enteros que incluye algunos ceros
@@ -119,6 +152,23 @@ public class Main2 {
             cálculo.
          */
 
+        System.out.println();
+        System.out.println("Ejercicio Intermedio 6");
+
+        List<Integer> enteros23 = List.of(2, 0, 4, 5, 0, 1);
+
+        Optional<Integer> resultadoMultiplicacion = enteros23.stream()
+                .filter(i -> i != 0)
+                .reduce((x, y) -> x * y);
+
+        if (resultadoMultiplicacion.isEmpty()) {
+            System.out.println("No se puede multiplicar.");
+        }else{
+            System.out.println("Resultado: " + resultadoMultiplicacion.get());
+
+        }
+
+
         /*
             8) Dada una clase Venta (con atributos vendedor de tipo String,
             producto de tipo String, cantidad de tipo int y precioUnitario de
@@ -126,6 +176,23 @@ public class Main2 {
             El resultado debe ser un Map<String, Double> (Nota: el monto de una
             venta es cantidad * precioUnitario).
          */
+
+        System.out.println();
+        System.out.println("Ejercicio Intermedio 7");
+
+        List<Venta> ventas = List.of(
+                new Venta("Gustavo", "PC i5", 1, 1202000D),
+                new Venta("Maria", "Tablet", 2, 900000D),
+                new Venta("Gustavo", "Iphone 12", 1, 1000000D),
+                new Venta("Maria", "Notebook", 1, 1902000D),
+                new Venta("Juan", "MOto 125cc", 1, 7202000D)
+        );
+
+       Map<String, Double> mapaVendedores = ventas.stream()
+                .collect(Collectors.groupingBy(Venta::vendedor, Collectors.summingDouble(v -> v.cantidad() * v.precioUnitario())));
+
+       mapaVendedores.forEach((clave, valor) -> System.out.println("Clave: " + clave + " Valor: " + valor));
+
 
         /*
              9) Dada una clase Vehiculo (con atributos marca de tipo String,
