@@ -199,9 +199,39 @@ public class Main2 {
              modelo de tipo String, y tipo de tipo String -ej. "Auto", "Moto",
              "Camioneta"-), agrupa los vehículos primero por su tipo y, dentro
               de cada tipo, agrupa por marca contando cuántos vehículos hay de
-              esa marca. El resultado final debe ser de tipo Map<String,
-              Long Map<String,>>.
+              esa marca. El resultado final debe ser de tipo Map<String, Long Map<String,>>.
          */
+
+        System.out.println();
+        System.out.println("Ejercicio Intermedio 8");
+
+        List<Vehiculo> vehiculos = List.of(
+                // --- AUTOS ---
+                new Vehiculo("Toyota", "Corolla", "Auto"),
+                new Vehiculo("Toyota", "Yaris", "Auto"),
+                new Vehiculo("Honda", "Civic", "Auto"),
+                new Vehiculo("Honda", "Accord", "Auto"),
+                new Vehiculo("Volkswagen", "Golf", "Auto"),
+
+                // --- MOTOS ---
+                new Vehiculo("Yamaha", "MT-03", "Moto"),
+                new Vehiculo("Yamaha", "FZ25", "Moto"),
+                new Vehiculo("Honda", "CB300F", "Moto"),
+                new Vehiculo("Honda", "Twister", "Moto"),
+                new Vehiculo("Kawasaki", "Ninja 400", "Moto"),
+
+                // --- CAMIONETAS ---
+                new Vehiculo("Toyota", "Hilux", "Camioneta"),
+                new Vehiculo("Toyota", "SW4", "Camioneta"),
+                new Vehiculo("Ford", "Ranger", "Camioneta"),
+                new Vehiculo("Ford", "Maverick", "Camioneta"),
+                new Vehiculo("Volkswagen", "Amarok", "Camioneta")
+        );
+
+        Map<String, Map<String, Long>> mapaVehiculos =  vehiculos.stream()
+                .collect(Collectors.groupingBy(Vehiculo::tipo, Collectors.groupingBy(Vehiculo::marca, Collectors.counting())));
+
+        mapaVehiculos.forEach((clave, valor) -> System.out.println("Clave: " + clave + " Valor: " + valor));
 
         /*
                 10. Dada una clase Proyecto (con atributos id de tipo int,
